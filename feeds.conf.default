@@ -1,8 +1,7 @@
-src-git packages https://github.com/77-QiQi/packages.git;Archived
-src-git luci https://github.com/77-QiQi/luci.git;Archived
-src-git routing https://git.openwrt.org/feed/routing.git
-src-git telephony https://git.openwrt.org/feed/telephony.git
-src-git video https://github.com/openwrt/video.git
+src-git packages https://github.com/77-QiQi/packages.git;master
+src-git luci https://github.com/77-QiQi/luci.git;master
+src-git routing https://github.com/77-QiQi/routing.git;master
+src-git telephony https://github.com/77-QiQi/telephony.git;master
+src-git video https://github.com/77-QiQi/video.git;master
 #src-git targets https://github.com/openwrt/targets.git
-#src-git oldpackages http://git.openwrt.org/packages.git
 #src-link custom /usr/src/openwrt/custom-feed
