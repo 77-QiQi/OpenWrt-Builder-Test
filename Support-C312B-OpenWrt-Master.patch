@@ -1,4 +1,4 @@
-From f929921f2c88f7daee16f1d1cb3ce9730abc9d43 Mon Sep 17 00:00:00 2001
+From 0c17643f94a4cc2d7641eefd6e33879d3e039b14 Mon Sep 17 00:00:00 2001
 From: unknown <unknown@localhost>
 Date: Tue, 10 Nov 2026 23:49:09 +0800
 Subject: [PATCH] ramips: add support for HiWiFi C312B (R33)
@@ -30,8 +30,8 @@ Signed-off-by: unknown <unknown@localhost>
  .../mt7620/base-files/lib/upgrade/platform.sh |    3 +
  target/linux/ramips/mt7620/config-6.18        |   16 +
  target/linux/ramips/mt7620/target.mk          |    2 +-
- ...driver-support-for-MT7620-nand-flash.patch |   58 +
- 12 files changed, 1486 insertions(+), 2 deletions(-)
+ ...driver-support-for-MT7620-nand-flash.patch |   43 +
+ 12 files changed, 1471 insertions(+), 2 deletions(-)
  create mode 100644 target/linux/ramips/dts/mt7620a_hiwifi_r33.dts
  create mode 100644 target/linux/ramips/files/drivers/mtd/nand/raw/mt7620_nand.c
  create mode 100644 target/linux/ramips/patches-6.18/412-mtd-rawnand-add-driver-support-for-MT7620-nand-flash.patch
@@ -1625,10 +1625,10 @@ index 34488f9..1d1d281 100644
  DEFAULT_PACKAGES += kmod-rt2800-soc wpad-basic-mbedtls swconfig
 diff --git a/target/linux/ramips/patches-6.18/412-mtd-rawnand-add-driver-support-for-MT7620-nand-flash.patch b/target/linux/ramips/patches-6.18/412-mtd-rawnand-add-driver-support-for-MT7620-nand-flash.patch
 new file mode 100644
-index 0000000..eda192e
+index 0000000..bca317a
 --- /dev/null
 +++ b/target/linux/ramips/patches-6.18/412-mtd-rawnand-add-driver-support-for-MT7620-nand-flash.patch
-@@ -0,0 +1,58 @@
+@@ -0,0 +1,43 @@
 +From 5a7b9c0d1e2f3041526374859607a8b9c0d1e2f3 Mon Sep 17 00:00:00 2001
 +From: OpenWrt contributors <openwrt@localhost>
 +Date: Sat, 14 Nov 2026 10:00:00 +0800
@@ -1653,15 +1653,7 @@ index 0000000..eda192e
 +
 +--- a/drivers/mtd/nand/raw/Kconfig
 ++++ b/drivers/mtd/nand/raw/Kconfig
-+@@ -314,11 +314,20 @@
-+ config MTD_NAND_MT7621
-+ 	tristate "MT7621 NAND controller"
-+ 	depends on SOC_MT7621 || COMPILE_TEST
-+ 	depends on HAS_IOMEM
-+ 	help
-+ 	  Enables support for NAND controller on MT7621 SoC.
-+ 	  This driver uses PIO mode for data transmission instead of DMA mode.
-+ 
++@@ -314,2 +314,11 @@
 ++config MTD_NAND_MT7620
 ++	tristate "MT7620 NAND controller"
 ++	depends on SOC_MT7620 || COMPILE_TEST
@@ -1673,20 +1665,13 @@ index 0000000..eda192e
 ++
 + config MTD_NAND_MTK
 + 	tristate "MTK NAND controller"
-+ 	depends on MTD_NAND_ECC_MEDIATEK
-+
 +--- a/drivers/mtd/nand/raw/Makefile
 ++++ b/drivers/mtd/nand/raw/Makefile
-+@@ -46,7 +46,8 @@
-+ obj-$(CONFIG_MTD_NAND_HISI504)	        += hisi504_nand.o
-+ obj-$(CONFIG_MTD_NAND_BRCMNAND)		+= brcmnand/
-+ obj-$(CONFIG_MTD_NAND_QCOM)		+= qcom_nandc.o
-+ obj-$(CONFIG_MTD_NAND_MT7621)		+= mt7621_nand.o
-++obj-$(CONFIG_MTD_NAND_MT7620)		+= mt7620_nand.o
++@@ -49,3 +49,4 @@
 + obj-$(CONFIG_MTD_NAND_MTK)		+= mtk_nand.o
+++obj-$(CONFIG_MTD_NAND_MT7620)		+= mt7620_nand.o
 + obj-$(CONFIG_MTD_NAND_MXIC)		+= mxic_nand.o
 + obj-$(CONFIG_MTD_NAND_TEGRA)		+= tegra_nand.o
-+
 -- 
 2.56.1.windows.1
 
